@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dream.dart';
 import 'dream_card.dart';
+import 'stat_info_reminder_settings.dart';
 
 void main() => runApp(MaterialApp(
       // ignore: prefer_const_constructors
@@ -113,7 +114,7 @@ class _HomeState extends State<Home> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => const InfoPage(),
+                          builder: (_) => InfoPage(),
                         ),
                       );
                     },
@@ -280,126 +281,6 @@ class _AddDreamState extends State<AddDream> {
         leading: IconButton(
           icon:
               const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      ),
-    );
-  }
-}
-
-// ~~~~~~~~~~~~| Stat Page |~~~~~~~~~~~~
-
-class StatPage extends StatefulWidget {
-  const StatPage({Key? key}) : super(key: key);
-
-  @override
-  State<StatPage> createState() => _StatPageState();
-}
-
-class _StatPageState extends State<StatPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.deepPurple[50],
-      appBar: AppBar(
-        title: const Text('Achievements & Statistics'),
-        centerTitle: true,
-        elevation: 0.5,
-        backgroundColor: Colors.white,
-        foregroundColor: const Color.fromARGB(255, 29, 20, 66),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded,
-              color: Color.fromARGB(255, 29, 20, 66)),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      ),
-    );
-  }
-}
-
-// ~~~~~~~~~~~~| Info Page |~~~~~~~~~~~~
-
-class InfoPage extends StatefulWidget {
-  const InfoPage({Key? key}) : super(key: key);
-
-  @override
-  State<InfoPage> createState() => _InfoPageState();
-}
-
-class _InfoPageState extends State<InfoPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.deepPurple[50],
-      appBar: AppBar(
-        title: const Text('Dream Theory'),
-        centerTitle: true,
-        elevation: 0.5,
-        backgroundColor: Colors.white,
-        foregroundColor: const Color.fromARGB(255, 29, 20, 66),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded,
-              color: Color.fromARGB(255, 29, 20, 66)),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      ),
-    );
-  }
-}
-
-// ~~~~~~~~~~~~| Set Reminder |~~~~~~~~~~~~
-
-class SetReminder extends StatefulWidget {
-  const SetReminder({Key? key}) : super(key: key);
-
-  @override
-  State<SetReminder> createState() => _SetReminderState();
-}
-
-class _SetReminderState extends State<SetReminder> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.deepPurple[50],
-      appBar: AppBar(
-        title: const Text('Set Reminder'),
-        centerTitle: true,
-        elevation: 0.5,
-        backgroundColor: Colors.white,
-        foregroundColor: const Color.fromARGB(255, 29, 20, 66),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded,
-              color: Color.fromARGB(255, 29, 20, 66)),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      ),
-    );
-  }
-}
-
-// ~~~~~~~~~~~~| Settings |~~~~~~~~~~~~
-
-class Settings extends StatefulWidget {
-  const Settings({Key? key}) : super(key: key);
-
-  @override
-  State<Settings> createState() => _SettingsState();
-}
-
-class _SettingsState extends State<Settings> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.deepPurple[50],
-      appBar: AppBar(
-        title: const Text('Settings'),
-        centerTitle: true,
-        elevation: 0.5,
-        backgroundColor: Colors.white,
-        foregroundColor: const Color.fromARGB(255, 29, 20, 66),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded,
-              color: Color.fromARGB(255, 29, 20, 66)),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
