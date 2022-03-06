@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dream.dart';
+import 'dream_card.dart';
 
 void main() => runApp(MaterialApp(
       // ignore: prefer_const_constructors
@@ -176,14 +177,25 @@ class DreamList extends StatefulWidget {
 }
 
 class _DreamListState extends State<DreamList> {
+// list of dreams
   List<Dream> dreams = [
-    Dream('Walk in Park', 'I was walking in a park and a dragon attacked me',
-        false, DateTime(2022, 03, 04)),
     Dream(
-        'Climbing Accident',
-        'I was climbing on a steep rock and another dragon attacked me',
-        true,
-        DateTime(2022, 03, 05))
+        title: 'Walk in Park',
+        description: 'I was walking in a park and a dragon attacked me.',
+        lucid: false,
+        date: DateTime(2022, 03, 04)),
+    Dream(
+        title: 'Climbing Accident',
+        description:
+            'I was climbing on a steep rock and another dragon attacked me.',
+        lucid: true,
+        date: DateTime(2022, 03, 05)),
+    Dream(
+        title: 'Dragon attack',
+        description:
+            'I was getting attacked by a dragon and all of sudden another dragon attacked me.. these dragons are getting out of hand imo.',
+        lucid: true,
+        date: DateTime(2022, 03, 05))
   ];
 
   @override
@@ -239,11 +251,7 @@ class _DreamListState extends State<DreamList> {
         ],
       ),
       body: Column(
-        children: dreams
-            .map((dream) => Text(
-                  dream.title,
-                ))
-            .toList(),
+        children: dreams.map((dream) => DreamCard(dream: dream)).toList(),
       ),
     );
   }

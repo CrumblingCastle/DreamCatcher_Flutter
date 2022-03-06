@@ -1,10 +1,14 @@
 import 'dart:core';
 
 class Dream {
-  String title = '';
+  String title;
   String description;
   bool lucid;
   DateTime date;
 
-  Dream(this.title, this.description, this.lucid, this.date);
+  Dream(
+      {this.title = 'Untitled Dream',
+      this.description = 'No description added',
+      this.lucid = false,
+      required this.date});
 }
