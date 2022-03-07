@@ -170,7 +170,7 @@ class _HomeState extends State<Home> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => InfoPage(),
+                          builder: (_) => const InfoPage(),
                         ),
                       );
                     },
