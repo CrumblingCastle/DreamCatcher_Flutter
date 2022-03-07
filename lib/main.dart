@@ -1,7 +1,11 @@
+//import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'dream.dart';
 import 'dream_card.dart';
 import 'stat_info_reminder_settings.dart';
+// ignore: unused_import
+import 'package:intl/intl.dart';
 
 void main() => runApp(MaterialApp(
       // ignore: prefer_const_constructors
@@ -73,7 +77,7 @@ class _HomeState extends State<Home> {
             initialDate: DateTime.now(),
             firstDate: DateTime(2022, 1, 1),
             lastDate: DateTime.now().add(const Duration(days: 1825)),
-            onDateChanged: (DateTime value) {
+            onDateChanged: (DateTime dreamDate) {
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -189,14 +193,45 @@ class _DreamListState extends State<DreamList> {
         title: 'Climbing Accident',
         description:
             'I was climbing on a steep rock and another dragon attacked me.',
-        lucid: true,
+        lucid: false,
         date: DateTime(2022, 03, 05)),
     Dream(
         title: 'Dragon attack',
         description:
             'I was getting attacked by a dragon and all of sudden another dragon attacked me.. these dragons are getting out of hand imo.',
         lucid: true,
-        date: DateTime(2022, 03, 05))
+        date: DateTime(2022, 03, 06)),
+    Dream(
+        title: 'Awaiting for this bloke to come',
+        description:
+            'Well, tonight i was just playing table tenis, waiting for the dragon. He never came :( im sad.',
+        lucid: true,
+        date: DateTime(2022, 03, 07)),
+    Dream(
+        title: 'Life is meaningless',
+        description:
+            'I was getting angry with these dragons.. but now, now i see. I finally realise they were my only real friends.',
+        lucid: false,
+        date: DateTime(2022, 03, 08)),
+    Dream(
+        title: 'Dragon attack mothafackas',
+        description:
+            'WHAT A FIGHT! Dragon is back when nobody expected him. I was chilling in the park and BAM! Dragon. We had a nice fight, then saluted eachother and went on with our days',
+        lucid: true,
+        date: DateTime(2022, 03, 09)),
+    Dream(
+        title: 'Lunch with dragon',
+        description:
+            'Tonight we were not in the mood to fight. Dragon came but we just decided to grab a sandwich instead.',
+        lucid: true,
+        date: DateTime(2022, 03, 10)),
+    Dream(
+        title:
+            'Everybody asks what is dragon doing, but noone ever asks how is dragon doing',
+        description:
+            'I am getting to know my buddy dragon and he seems like a top bloke. It had never come to my attention how opressed dragon are in todays neo-feudalistic societies.',
+        lucid: true,
+        date: DateTime(2022, 03, 11)),
   ];
 
   @override
@@ -215,6 +250,7 @@ class _DreamListState extends State<DreamList> {
         actions: [
           Row(
             children: [
+              //Text(DateFormat.yMMMd().format(dreamDate)),
               const Text(
                 'ADD DREAM',
                 style: TextStyle(
@@ -251,7 +287,7 @@ class _DreamListState extends State<DreamList> {
           ),
         ],
       ),
-      body: Column(
+      body: ListView(
         children: dreams.map((dream) => DreamCard(dream: dream)).toList(),
       ),
     );
@@ -259,6 +295,7 @@ class _DreamListState extends State<DreamList> {
 }
 
 // ~~~~~~~~~~~~| Add Dream |~~~~~~~~~~~~
+// Βάλτο μέσα στη main εκεί που ήταν να είναι κανονικά
 
 class AddDream extends StatefulWidget {
   const AddDream({Key? key}) : super(key: key);
@@ -268,12 +305,14 @@ class AddDream extends StatefulWidget {
 }
 
 class _AddDreamState extends State<AddDream> {
+  bool? lucid = false;
+  //late String title_of_new_dream;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.deepPurple[50],
       appBar: AppBar(
-        title: const Text('Add Dream'),
+        title: const Text('Add Dream on #date here#'),
         centerTitle: true,
         elevation: 0.5,
         backgroundColor: Colors.white,
@@ -281,8 +320,113 @@ class _AddDreamState extends State<AddDream> {
         leading: IconButton(
           icon:
               const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Navigator.of(context).pop(
+            MaterialPageRoute(
+              builder: (context) => const DreamList(),
+            ),
+          ),
         ),
+      ),
+      body: Column(
+        children: <Widget>[
+          Row(
+            children: [
+              const SizedBox(width: 18.0),
+              const Text('Lucid'),
+              Checkbox(
+                value: lucid,
+                onChanged: (value) {
+                  setState(() {
+                    lucid = value;
+                  });
+                },
+              ),
+              const Spacer(),
+              TextButton(
+                child: const Text('SAVE DREAM'),
+                onPressed: () {
+                  //print('Pressed');
+                },
+              ),
+              const SizedBox(width: 18.0)
+            ],
+          ),
+          // ~~~~~~~~~~ TITLE TEXT-BOX
+          Container(
+            margin: const EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
+            child: TextField(
+              onChanged: (text) {
+                //title_of_new_dream = text;
+              },
+              decoration: InputDecoration(
+                  hintText: "Input text |",
+                  labelText: "Title",
+                  labelStyle:
+                      const TextStyle(fontSize: 16, color: Colors.deepPurple),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  fillColor: Colors.white,
+                  filled: true),
+              keyboardType: TextInputType.text,
+              maxLines: 1,
+            ),
+          ),
+          const SizedBox(height: 10.0),
+          // ~~~~~~~~~~ DESCRIPTION TEXT-BOX + icon buttons
+          Flexible(
+            child: Container(
+              margin: const EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 15.0),
+              child: TextField(
+                expands: true,
+                maxLines: null,
+                textAlignVertical: TextAlignVertical.top,
+                decoration: InputDecoration(
+                    hintText: "Input text |",
+                    alignLabelWithHint: true,
+                    label:
+                        const Text('Description', textAlign: TextAlign.start),
+                    labelStyle:
+                        const TextStyle(fontSize: 16, color: Colors.deepPurple),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    suffixIcon: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      // added line
+                      // mainAxisSize: MainAxisSize.min,
+                      // added line
+                      children: <Widget>[
+                        const SizedBox(height: 10.0),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.photo_camera_outlined),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.create_outlined),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.account_circle_outlined),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.location_on_outlined),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.extension_outlined),
+                        ),
+                      ],
+                    ),
+                    fillColor: Colors.white,
+                    filled: true),
+                keyboardType: TextInputType.text,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
