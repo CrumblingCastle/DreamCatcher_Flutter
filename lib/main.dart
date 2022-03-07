@@ -15,6 +15,58 @@ void main() => runApp(MaterialApp(
       ),
     ));
 
+// list of dreams
+List<Dream> dreams = [
+  Dream(
+      title: 'Walk in Park',
+      description: 'I was walking in a park and a dragon attacked me.',
+      lucid: false,
+      date: DateTime(2022, 03, 04)),
+  Dream(
+      title: 'Climbing Accident',
+      description:
+          'I was climbing on a steep rock and another dragon attacked me.',
+      lucid: false,
+      date: DateTime(2022, 03, 05)),
+  Dream(
+      title: 'Dragon attack',
+      description:
+          'I was getting attacked by a dragon and all of sudden another dragon attacked me.. these dragons are getting out of hand imo.',
+      lucid: true,
+      date: DateTime(2022, 03, 06)),
+  Dream(
+      title: 'Awaiting for this bloke to come',
+      description:
+          'Well, tonight i was just playing table tenis, waiting for the dragon. He never came :( im sad.',
+      lucid: true,
+      date: DateTime(2022, 03, 07)),
+  Dream(
+      title: 'Life is meaningless',
+      description:
+          'I was getting angry with these dragons.. but now, now i see. I finally realise they were my only real friends.',
+      lucid: false,
+      date: DateTime(2022, 03, 08)),
+  Dream(
+      title: 'Dragon attack mothafackas',
+      description:
+          'WHAT A FIGHT! Dragon is back when nobody expected him. I was chilling in the park and BAM! Dragon. We had a nice fight, then saluted eachother and went on with our days',
+      lucid: true,
+      date: DateTime(2022, 03, 09)),
+  Dream(
+      title: 'Lunch with dragon',
+      description:
+          'Tonight we were not in the mood to fight. Dragon came but we just decided to grab a sandwich instead.',
+      lucid: true,
+      date: DateTime(2022, 03, 10)),
+  Dream(
+      title:
+          'Everybody asks what is dragon doing, but noone ever asks how is dragon doing',
+      description:
+          'I am getting to know my buddy dragon and he seems like a top bloke. It had never come to my attention how opressed dragon are in todays neo-feudalistic societies.',
+      lucid: true,
+      date: DateTime(2022, 03, 11)),
+];
+
 // ~~~~~~~~~~~~| Home Page |~~~~~~~~~~~~
 
 class Home extends StatefulWidget {
@@ -182,58 +234,6 @@ class DreamList extends StatefulWidget {
 }
 
 class _DreamListState extends State<DreamList> {
-// list of dreams
-  List<Dream> dreams = [
-    Dream(
-        title: 'Walk in Park',
-        description: 'I was walking in a park and a dragon attacked me.',
-        lucid: false,
-        date: DateTime(2022, 03, 04)),
-    Dream(
-        title: 'Climbing Accident',
-        description:
-            'I was climbing on a steep rock and another dragon attacked me.',
-        lucid: false,
-        date: DateTime(2022, 03, 05)),
-    Dream(
-        title: 'Dragon attack',
-        description:
-            'I was getting attacked by a dragon and all of sudden another dragon attacked me.. these dragons are getting out of hand imo.',
-        lucid: true,
-        date: DateTime(2022, 03, 06)),
-    Dream(
-        title: 'Awaiting for this bloke to come',
-        description:
-            'Well, tonight i was just playing table tenis, waiting for the dragon. He never came :( im sad.',
-        lucid: true,
-        date: DateTime(2022, 03, 07)),
-    Dream(
-        title: 'Life is meaningless',
-        description:
-            'I was getting angry with these dragons.. but now, now i see. I finally realise they were my only real friends.',
-        lucid: false,
-        date: DateTime(2022, 03, 08)),
-    Dream(
-        title: 'Dragon attack mothafackas',
-        description:
-            'WHAT A FIGHT! Dragon is back when nobody expected him. I was chilling in the park and BAM! Dragon. We had a nice fight, then saluted eachother and went on with our days',
-        lucid: true,
-        date: DateTime(2022, 03, 09)),
-    Dream(
-        title: 'Lunch with dragon',
-        description:
-            'Tonight we were not in the mood to fight. Dragon came but we just decided to grab a sandwich instead.',
-        lucid: true,
-        date: DateTime(2022, 03, 10)),
-    Dream(
-        title:
-            'Everybody asks what is dragon doing, but noone ever asks how is dragon doing',
-        description:
-            'I am getting to know my buddy dragon and he seems like a top bloke. It had never come to my attention how opressed dragon are in todays neo-feudalistic societies.',
-        lucid: true,
-        date: DateTime(2022, 03, 11)),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
