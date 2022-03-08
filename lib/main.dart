@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'dream.dart';
 import 'dream_card.dart';
 import 'stat_info_reminder_settings.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 // ignore: unused_import
 import 'package:intl/intl.dart';
 
@@ -15,57 +16,122 @@ void main() => runApp(MaterialApp(
       ),
     ));
 
-// list of dreams
+// list of dreams - global
 List<Dream> dreams = [
   Dream(
-      title: 'Walk in Park',
-      description: 'I was walking in a park and a dragon attacked me.',
-      lucid: false,
-      date: DateTime(2022, 03, 04)),
+    title: 'Walk in Park',
+    description: 'I was walking in a park and a dragon attacked me.',
+    lucid: false,
+    date: DateTime(2022, 03, 04),
+    characters: ['dragon'],
+  ),
   Dream(
-      title: 'Climbing Accident',
-      description:
-          'I was climbing on a steep rock and another dragon attacked me.',
-      lucid: false,
-      date: DateTime(2022, 03, 05)),
+    title: 'Climbing Accident',
+    description:
+        'I was climbing on a steep rock and another dragon attacked me.',
+    lucid: false,
+    date: DateTime(2022, 03, 05),
+    characters: ['dragon', 'coach Victor'],
+  ),
   Dream(
-      title: 'Dragon attack',
-      description:
-          'I was getting attacked by a dragon and all of sudden another dragon attacked me.. these dragons are getting out of hand imo.',
-      lucid: true,
-      date: DateTime(2022, 03, 06)),
+    title: 'Dragon attack',
+    description:
+        'I was getting attacked by a dragon and all of sudden another dragon attacked me.. these dragons are getting out of hand imo.',
+    lucid: true,
+    date: DateTime(2022, 03, 06),
+  ),
   Dream(
-      title: 'Awaiting for this bloke to come',
-      description:
-          'Well, tonight i was just playing table tenis, waiting for the dragon. He never came :( im sad.',
-      lucid: true,
-      date: DateTime(2022, 03, 07)),
+    title: 'Awaiting for this bloke to come',
+    description:
+        'Well, tonight i was just playing table tenis, waiting for the dragon. He never came :( im sad.',
+    lucid: true,
+    date: DateTime(2022, 03, 07),
+    characters: ['maimos'],
+  ),
   Dream(
-      title: 'Life is meaningless',
-      description:
-          'I was getting angry with these dragons.. but now, now i see. I finally realise they were my only real friends.',
-      lucid: false,
-      date: DateTime(2022, 03, 08)),
+    title: 'Life is meaningless',
+    description:
+        'I was getting angry with these dragons.. but now, now i see. I finally realise they were my only real friends.',
+    lucid: false,
+    date: DateTime(2022, 03, 08),
+  ),
   Dream(
-      title: 'Dragon attack mothafackas',
-      description:
-          'WHAT A FIGHT! Dragon is back when nobody expected him. I was chilling in the park and BAM! Dragon. We had a nice fight, then saluted eachother and went on with our days',
-      lucid: true,
-      date: DateTime(2022, 03, 09)),
+    title: 'Dragon attack mothafackas',
+    description:
+        'WHAT A FIGHT! Dragon is back when nobody expected him. I was chilling in the park and BAM! Dragon. We had a nice fight, then saluted eachother and went on with our days',
+    lucid: true,
+    date: DateTime(2022, 03, 09),
+    characters: ['dragon'],
+  ),
   Dream(
-      title: 'Lunch with dragon',
-      description:
-          'Tonight we were not in the mood to fight. Dragon came but we just decided to grab a sandwich instead.',
-      lucid: true,
-      date: DateTime(2022, 03, 10)),
+    title: 'Lunch with dragon',
+    description:
+        'Tonight we were not in the mood to fight. Dragon came but we just decided to grab a sandwich instead.',
+    lucid: true,
+    date: DateTime(2022, 03, 10),
+    characters: ['dragon'],
+  ),
   Dream(
-      title:
-          'Everybody asks what is dragon doing, but noone ever asks how is dragon doing',
-      description:
-          'I am getting to know my buddy dragon and he seems like a top bloke. It had never come to my attention how opressed dragon are in todays neo-feudalistic societies.',
-      lucid: true,
-      date: DateTime(2022, 03, 11)),
+    title:
+        'Everybody asks what is dragon doing, but noone ever asks how is dragon doing',
+    description:
+        'I am getting to know my buddy dragon and he seems like a top bloke. It had never come to my attention how opressed dragon are in todays neo-feudalistic societies.',
+    lucid: true,
+    date: DateTime(2022, 03, 11),
+    characters: ['dragon'],
+  ),
+  Dream(
+    title: 'Awaiting for this bloke to come',
+    description:
+        'Well, tonight i was just playing table tenis, waiting for the dragon. He never came :( im sad.',
+    lucid: true,
+    date: DateTime(2022, 03, 12),
+    characters: ['maimos'],
+  ),
+  Dream(
+    title: 'Awaiting for this bloke to come',
+    description:
+        'Well, tonight i was just playing table tenis, waiting for the dragon. He never came :( im sad.',
+    lucid: true,
+    date: DateTime(2022, 03, 13),
+    characters: ['maimos'],
+  ),
+  Dream(
+    title: 'Awaiting for this bloke to come',
+    description:
+        'Well, tonight i was just playing table tenis, waiting for the dragon. He never came :( im sad.',
+    lucid: true,
+    date: DateTime(2022, 03, 14),
+    characters: ['maimos'],
+  ),
+  Dream(
+    title: 'Awaiting for this bloke to come',
+    description:
+        'Well, tonight i was just playing table tenis, waiting for the dragon. He never came :( im sad.',
+    lucid: true,
+    date: DateTime(2022, 03, 17),
+    characters: ['maimos'],
+  ),
+  Dream(
+    title: 'Awaiting for this bloke to come',
+    description:
+        'Well, tonight i was just playing table tenis, waiting for the dragon. He never came :( im sad.',
+    lucid: true,
+    date: DateTime(2022, 03, 20),
+    characters: ['maimos'],
+  ),
+  Dream(
+    title: 'Awaiting for this bloke to come',
+    description:
+        'Well, tonight i was just playing table tenis, waiting for the dragon. He never came :( im sad.',
+    lucid: true,
+    date: DateTime(2022, 03, 27),
+    characters: ['maimos'],
+  ),
 ];
+
+// date we picked - global
+DateTime selectedDate = DateTime.now();
 
 // ~~~~~~~~~~~~| Home Page |~~~~~~~~~~~~
 
@@ -129,7 +195,8 @@ class _HomeState extends State<Home> {
             initialDate: DateTime.now(),
             firstDate: DateTime(2022, 1, 1),
             lastDate: DateTime.now().add(const Duration(days: 1825)),
-            onDateChanged: (DateTime dreamDate) {
+            onDateChanged: (DateTime date) {
+              selectedDate = date;
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -234,6 +301,23 @@ class DreamList extends StatefulWidget {
 }
 
 class _DreamListState extends State<DreamList> {
+  final ItemScrollController itemController = ItemScrollController();
+  //final ItemPositionsListener itemPositionsListener = ItemPositionsListener();
+
+  Future scrollToItem(int index) async {
+    itemController.scrollTo(
+      index: index,
+      duration: const Duration(seconds: 1),
+      curve: Curves.easeInOutCubic,
+    );
+  }
+
+  @override
+  initState() {
+    scrollToItem(5);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -250,7 +334,13 @@ class _DreamListState extends State<DreamList> {
         actions: [
           Row(
             children: [
-              //Text(DateFormat.yMMMd().format(dreamDate)),
+              TextButton(
+                child: Text('   Jump to\n${dMy.format(selectedDate)}'),
+                onPressed: () {
+                  scrollToItem(6);
+                },
+              ),
+              const SizedBox(width: 30.0),
               const Text(
                 'ADD DREAM',
                 style: TextStyle(
@@ -260,9 +350,7 @@ class _DreamListState extends State<DreamList> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(
-                width: 12.0,
-              ),
+              const SizedBox(width: 12.0),
               FloatingActionButton(
                 onPressed: () {
                   Navigator.push(
@@ -280,22 +368,25 @@ class _DreamListState extends State<DreamList> {
                   color: Color.fromARGB(255, 29, 20, 66),
                 ),
               ),
-              const SizedBox(
-                width: 15.0,
-              ),
+              const SizedBox(width: 15.0),
             ],
           ),
         ],
       ),
-      body: ListView(
-        children: dreams.map((dream) => DreamCard(dream: dream)).toList(),
+      body: ScrollablePositionedList.builder(
+        itemCount: dreams.length,
+        itemBuilder: (context, index) {
+          return DreamCard(dream: dreams[index]);
+        },
+        itemScrollController: itemController,
+        //itemPositionsListener: ItemPositionsListener(),
+        //  children: dreams.map((dream) => DreamCard(dream: dream)).toList(),
       ),
     );
   }
 }
 
 // ~~~~~~~~~~~~| Add Dream |~~~~~~~~~~~~
-// Βάλτο μέσα στη main εκεί που ήταν να είναι κανονικά
 
 class AddDream extends StatefulWidget {
   const AddDream({Key? key}) : super(key: key);

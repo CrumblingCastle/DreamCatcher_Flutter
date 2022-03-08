@@ -82,6 +82,14 @@ class DreamCard extends StatelessWidget {
                 color: Colors.deepPurple,
               ),
             ),
+            const SizedBox(height: 5.0),
+            Text(
+              dream.characters.toString(),
+              style: const TextStyle(
+                fontSize: 14.0,
+                color: Colors.blue,
+              ),
+            ),
           ],
         ),
       ),
