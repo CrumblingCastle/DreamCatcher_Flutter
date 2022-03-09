@@ -7,6 +7,7 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 // ignore: unused_import
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:after_layout/after_layout.dart';
 
 void main() => runApp(MaterialApp(
       // ignore: prefer_const_constructors
@@ -71,6 +72,33 @@ List<Dream> dreams = [
         'Tonight we were not in the mood to fight. Dragon came but we just decided to grab a sandwich instead.',
     lucid: true,
     date: DateTime(2022, 03, 10),
+    characters: ['dragon'],
+  ),
+  Dream(
+    title:
+        'Everybody asks what is dragon doing, but noone ever asks how is dragon doing',
+    description:
+        'I am getting to know my buddy dragon and he seems like a top bloke. It had never come to my attention how opressed dragon are in todays neo-feudalistic societies.',
+    lucid: true,
+    date: DateTime(2022, 03, 11),
+    characters: ['dragon'],
+  ),
+  Dream(
+    title:
+        'Everybody asks what is dragon doing, but noone ever asks how is dragon doing',
+    description:
+        'I am getting to know my buddy dragon and he seems like a top bloke. It had never come to my attention how opressed dragon are in todays neo-feudalistic societies.',
+    lucid: true,
+    date: DateTime(2022, 03, 11),
+    characters: ['dragon'],
+  ),
+  Dream(
+    title:
+        'Everybody asks what is dragon doing, but noone ever asks how is dragon doing',
+    description:
+        'I am getting to know my buddy dragon and he seems like a top bloke. It had never come to my attention how opressed dragon are in todays neo-feudalistic societies.',
+    lucid: true,
+    date: DateTime(2022, 03, 11),
     characters: ['dragon'],
   ),
   Dream(
@@ -304,15 +332,25 @@ class DreamList extends StatefulWidget {
   State<DreamList> createState() => _DreamListState();
 }
 
-class _DreamListState extends State<DreamList> {
+class _DreamListState extends State<DreamList>
+    with AfterLayoutMixin<DreamList> {
   final ItemScrollController itemController = ItemScrollController();
-  //final ItemPositionsListener itemPositionsListener = ItemPositionsListener();
+
+  @override
+  void afterFirstLayout(BuildContext context) {
+    Future.delayed(
+      const Duration(milliseconds: 400),
+      () {
+        scrollToItem(selectedDateIndex);
+      },
+    );
+  }
 
   Dream newDream = Dream(date: selectedDate);
   void updateInformation(Dream information) {
     setState(() {
       newDream = information;
-      dreams.add(newDream);
+      dreams.insert(dateToInsertIndex(selectedDate), newDream);
     });
   }
 
@@ -328,15 +366,9 @@ class _DreamListState extends State<DreamList> {
   Future scrollToItem(int index) async {
     itemController.scrollTo(
       index: index,
-      duration: const Duration(seconds: 1),
-      curve: Curves.easeInOutCubic,
+      duration: const Duration(milliseconds: 1300),
+      curve: Curves.easeInOutQuad,
     );
-  }
-
-  @override
-  initState() {
-    scrollToItem(5);
-    super.initState();
   }
 
   @override

@@ -38,6 +38,7 @@ dependencies:
   flutter_alarm_clock: ^0.0.2
   url_launcher:
   scrollable_positioned_list: ^0.2.3
+  after_layout: ^1.1.0
 
 dev_dependencies:
   flutter_test:
