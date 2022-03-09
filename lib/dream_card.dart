@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'dream.dart';
 import 'package:intl/intl.dart';
@@ -6,24 +7,65 @@ import 'main.dart';
 
 final dMy = DateFormat('dd/MM/yyyy');
 
-class DreamCard extends StatelessWidget {
-//  const DreamCard({
-//    Key? key,
-//  }) : super(key: key);
-
-  final Dream dream;
+class DreamCard extends StatefulWidget {
   // ignore: use_key_in_widget_constructors
   const DreamCard({required this.dream});
+  final Dream dream;
+  //final VoidCallback onDelete;
+
+  @override
+  State<DreamCard> createState() => _DreamCardState();
+}
+
+class _DreamCardState extends State<DreamCard> {
+  bool pressed = false;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onLongPressDown: (LongPressDownDetails details) {
+        setState(() {
+          pressed = true;
+        });
+      },
+      onLongPressCancel: () {
+        setState(() {
+          pressed = false;
+        });
+      },
       onLongPress: (() {
-        // TO DO: na bgainei para8yro
-        // TO DO: na ananewnei to para8yro me th diagrafh
-        dreams.remove(dream);
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Delete Dream?'),
+              content: const Text(
+                  'Are you sure you want to delete this dream? This action cannot be undone'),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('Delete'),
+                  onPressed: () {
+                    dreams.remove(widget.dream);
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: const Text('Cancel'),
+                  onPressed: () {
+                    setState(() {
+                      pressed = false;
+                    });
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
       }),
       child: Card(
+        color: (pressed ? Colors.grey : Colors.white),
         elevation: 15.0,
         margin: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
         child: Padding(
@@ -33,7 +75,7 @@ class DreamCard extends StatelessWidget {
             children: <Widget>[
               Row(
                 children: [
-                  if (dream.lucid == true)
+                  if (widget.dream.lucid == true)
                     Row(
                       children: const [
                         Icon(
@@ -67,7 +109,7 @@ class DreamCard extends StatelessWidget {
                     ),
                   const Spacer(),
                   Text(
-                    dMy.format(dream.date),
+                    dMy.format(widget.dream.date),
                     style: TextStyle(
                       color: Colors.blueGrey[600],
                       fontSize: 20.0,
@@ -76,7 +118,7 @@ class DreamCard extends StatelessWidget {
                 ],
               ),
               Text(
-                dream.title,
+                widget.dream.title,
                 style: const TextStyle(
                   fontSize: 18.0,
                   color: Color.fromARGB(255, 29, 20, 66),
@@ -84,7 +126,7 @@ class DreamCard extends StatelessWidget {
               ),
               const SizedBox(height: 6.0),
               Text(
-                dream.description,
+                widget.dream.description,
                 style: const TextStyle(
                   fontSize: 14.0,
                   color: Colors.deepPurple,
@@ -117,7 +159,7 @@ class DreamCard extends StatelessWidget {
                       ),
                     ),
                     TextSpan(
-                      text: dream.place.toString(),
+                      text: widget.dream.place.toString(),
                       style: TextStyle(color: Colors.blue[700]),
                     ),
                     WidgetSpan(
@@ -126,7 +168,7 @@ class DreamCard extends StatelessWidget {
                       color: Colors.blue[700],
                     )),
                     TextSpan(
-                        text: dream.characters.toString(),
+                        text: widget.dream.characters.toString(),
                         style: TextStyle(color: Colors.blue[700])),
                   ],
                 ),

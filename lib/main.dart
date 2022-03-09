@@ -335,6 +335,7 @@ class DreamList extends StatefulWidget {
 class _DreamListState extends State<DreamList>
     with AfterLayoutMixin<DreamList> {
   final ItemScrollController itemController = ItemScrollController();
+  Dream newDream = Dream(date: selectedDate);
 
   @override
   void afterFirstLayout(BuildContext context) {
@@ -346,7 +347,6 @@ class _DreamListState extends State<DreamList>
     );
   }
 
-  Dream newDream = Dream(date: selectedDate);
   void updateInformation(Dream information) {
     setState(() {
       newDream = information;
@@ -407,12 +407,6 @@ class _DreamListState extends State<DreamList>
               const SizedBox(width: 12.0),
               FloatingActionButton(
                 onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (_) => const AddDream(),
-                  //   ),
-                  // );
                   moveToSecondPage();
                 },
                 mini: true,
@@ -429,13 +423,11 @@ class _DreamListState extends State<DreamList>
         ],
       ),
       body: ScrollablePositionedList.builder(
+        itemScrollController: itemController,
         itemCount: dreams.length,
         itemBuilder: (context, index) {
           return DreamCard(dream: dreams[index]);
         },
-        itemScrollController: itemController,
-        //itemPositionsListener: ItemPositionsListener(),
-        //  children: dreams.map((dream) => DreamCard(dream: dream)).toList(),
       ),
     );
   }
