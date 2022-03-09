@@ -83,11 +83,44 @@ class DreamCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 5.0),
-            Text(
-              dream.characters.toString(),
-              style: const TextStyle(
-                fontSize: 14.0,
-                color: Colors.blue,
+/*            RichText(
+              text: TextSpan(
+                children: [
+                  WidgetSpan(
+                      child: Icon(
+                    Icons.location_on_outlined,
+                    color: Colors.blue[700],
+                  ),),
+                  TextSpan(
+                      text: dream.place.toString(),
+                      style: TextStyle(color: Colors.blue[700]),),
+                ],
+              ),
+            ),
+*/
+            const SizedBox(height: 5.0),
+            RichText(
+              text: TextSpan(
+                children: [
+                  WidgetSpan(
+                    child: Icon(
+                      Icons.location_on_outlined,
+                      color: Colors.blue[700],
+                    ),
+                  ),
+                  TextSpan(
+                    text: dream.place.toString(),
+                    style: TextStyle(color: Colors.blue[700]),
+                  ),
+                  WidgetSpan(
+                      child: Icon(
+                    Icons.person_outline,
+                    color: Colors.blue[700],
+                  )),
+                  TextSpan(
+                      text: dream.characters.toString(),
+                      style: TextStyle(color: Colors.blue[700])),
+                ],
               ),
             ),
           ],

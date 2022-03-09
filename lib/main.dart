@@ -1,16 +1,16 @@
-//import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'dream.dart';
+import 'dateToIndex.dart';
 import 'dream_card.dart';
 import 'stat_info_reminder_settings.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 // ignore: unused_import
 import 'package:intl/intl.dart';
+import 'package:flutter/cupertino.dart';
 
 void main() => runApp(MaterialApp(
       // ignore: prefer_const_constructors
-      home: Home(),
+      home: const Home(),
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
@@ -24,6 +24,7 @@ List<Dream> dreams = [
     lucid: false,
     date: DateTime(2022, 03, 04),
     characters: ['dragon'],
+    place: 'park',
   ),
   Dream(
     title: 'Climbing Accident',
@@ -47,6 +48,7 @@ List<Dream> dreams = [
     lucid: true,
     date: DateTime(2022, 03, 07),
     characters: ['maimos'],
+    place: 'ypogeio lolas',
   ),
   Dream(
     title: 'Life is meaningless',
@@ -132,6 +134,7 @@ List<Dream> dreams = [
 
 // date we picked - global
 DateTime selectedDate = DateTime.now();
+int selectedDateIndex = 0;
 
 // ~~~~~~~~~~~~| Home Page |~~~~~~~~~~~~
 
@@ -196,6 +199,7 @@ class _HomeState extends State<Home> {
             firstDate: DateTime(2022, 1, 1),
             lastDate: DateTime.now().add(const Duration(days: 1825)),
             onDateChanged: (DateTime date) {
+              selectedDateIndex = dateToIndex(date);
               selectedDate = date;
               Navigator.push(
                 context,
@@ -304,6 +308,23 @@ class _DreamListState extends State<DreamList> {
   final ItemScrollController itemController = ItemScrollController();
   //final ItemPositionsListener itemPositionsListener = ItemPositionsListener();
 
+  Dream newDream = Dream(date: selectedDate);
+  void updateInformation(Dream information) {
+    setState(() {
+      newDream = information;
+      dreams.add(newDream);
+    });
+  }
+
+  void moveToSecondPage() async {
+    final information = await Navigator.push(
+      context,
+      CupertinoPageRoute(
+          fullscreenDialog: true, builder: (context) => const AddDream()),
+    );
+    updateInformation(information);
+  }
+
   Future scrollToItem(int index) async {
     itemController.scrollTo(
       index: index,
@@ -335,9 +356,10 @@ class _DreamListState extends State<DreamList> {
           Row(
             children: [
               TextButton(
-                child: Text('   Jump to\n${dMy.format(selectedDate)}'),
+                child: Text(
+                    'index: $selectedDateIndex\n ${dMy.format(selectedDate)}'),
                 onPressed: () {
-                  scrollToItem(6);
+                  scrollToItem(selectedDateIndex);
                 },
               ),
               const SizedBox(width: 30.0),
@@ -353,12 +375,13 @@ class _DreamListState extends State<DreamList> {
               const SizedBox(width: 12.0),
               FloatingActionButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const AddDream(),
-                    ),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (_) => const AddDream(),
+                  //   ),
+                  // );
+                  moveToSecondPage();
                 },
                 mini: true,
                 elevation: 10.0,
@@ -396,14 +419,20 @@ class AddDream extends StatefulWidget {
 }
 
 class _AddDreamState extends State<AddDream> {
+  bool _lucid = false;
   bool? lucid = false;
-  //late String title_of_new_dream;
+  dynamic _title;
+  dynamic _description;
+  Dream dreamy = Dream(date: selectedDate);
+  final titleCon = TextEditingController();
+  final descCon = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.deepPurple[50],
       appBar: AppBar(
-        title: const Text('Add Dream on #date here#'),
+        title: Text('Add Dream on ${dMy.format(selectedDate)}'),
         centerTitle: true,
         elevation: 0.5,
         backgroundColor: Colors.white,
@@ -436,7 +465,21 @@ class _AddDreamState extends State<AddDream> {
               TextButton(
                 child: const Text('SAVE DREAM'),
                 onPressed: () {
-                  //print('Pressed');
+                  setState(() {
+                    _title = titleCon.text;
+                    _description = descCon.text;
+                    _lucid = lucid!;
+                    dreamy.characters = ['dragon'];
+                    dreamy.title = _title;
+                    dreamy.description = _description;
+                    dreamy.lucid = _lucid;
+                    dreamy.date = selectedDate;
+                  });
+                  // Navigator.of(context).pop(
+                  //     MaterialPageRoute(
+                  //       builder: (context) => const DreamList(),
+                  //     ));
+                  Navigator.pop(context, dreamy);
                 },
               ),
               const SizedBox(width: 18.0)
@@ -446,9 +489,7 @@ class _AddDreamState extends State<AddDream> {
           Container(
             margin: const EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
             child: TextField(
-              onChanged: (text) {
-                //title_of_new_dream = text;
-              },
+              controller: titleCon,
               decoration: InputDecoration(
                   hintText: "Input text |",
                   labelText: "Title",
@@ -471,6 +512,7 @@ class _AddDreamState extends State<AddDream> {
               child: TextField(
                 expands: true,
                 maxLines: null,
+                controller: descCon,
                 textAlignVertical: TextAlignVertical.top,
                 decoration: InputDecoration(
                     hintText: "Input text |",

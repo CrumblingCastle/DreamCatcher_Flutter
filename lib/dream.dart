@@ -6,6 +6,8 @@ class Dream {
   bool lucid;
   DateTime date;
   List<String> characters;
+  String place;
+  String theme;
 
   Dream({
     required this.date,
@@ -13,5 +15,7 @@ class Dream {
     this.description = 'No description added',
     this.lucid = false,
     this.characters = const [],
+    this.place = '',
+    this.theme = '',
   });
 }
