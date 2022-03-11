@@ -147,29 +147,45 @@ class _DreamCardState extends State<DreamCard> {
                   ],
                 ),
               ),
-    */
+        */
               const SizedBox(height: 5.0),
               RichText(
                 text: TextSpan(
                   children: [
-                    WidgetSpan(
-                      child: Icon(
-                        Icons.location_on_outlined,
-                        color: Colors.blue[700],
-                      ),
-                    ),
-                    TextSpan(
-                      text: widget.dream.place.toString(),
-                      style: TextStyle(color: Colors.blue[700]),
-                    ),
-                    WidgetSpan(
+                    if (widget.dream.place.toString() != '[null]') ...[
+                      WidgetSpan(
                         child: Icon(
-                      Icons.person_outline,
-                      color: Colors.blue[700],
-                    )),
-                    TextSpan(
+                          Icons.location_on_outlined,
+                          color: Colors.blue[700],
+                        ),
+                      ),
+                      TextSpan(
+                        text: widget.dream.place.toString(),
+                        style: TextStyle(color: Colors.blue[700]),
+                      ),
+                    ],
+                    if (widget.dream.characters.toString() != '[null]') ...[
+                      WidgetSpan(
+                          child: Icon(
+                        Icons.account_circle_outlined,
+                        color: Colors.blue[700],
+                      )),
+                      TextSpan(
                         text: widget.dream.characters.toString(),
-                        style: TextStyle(color: Colors.blue[700])),
+                        style: TextStyle(color: Colors.blue[700]),
+                      ),
+                    ],
+                    if (widget.dream.theme.toString() != '[null]') ...[
+                      WidgetSpan(
+                          child: Icon(
+                        Icons.extension_outlined,
+                        color: Colors.blue[700],
+                      )),
+                      TextSpan(
+                        text: widget.dream.theme.toString(),
+                        style: TextStyle(color: Colors.blue[700]),
+                      ),
+                    ],
                   ],
                 ),
               ),

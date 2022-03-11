@@ -6,16 +6,18 @@ class Dream {
   bool lucid;
   DateTime date;
   List<String> characters;
-  String place;
-  String theme;
+  List<String> place;
+  List<String> theme;
+  // TO DO: assets (photos and drawings)
 
   Dream({
     required this.date,
     this.title = 'Untitled Dream',
     this.description = 'No description added',
     this.lucid = false,
-    this.characters = const [],
-    this.place = '',
-    this.theme = '',
+    this.characters = const ['null'],
+    this.place = const ['null'],
+    this.theme = const ['null'],
+    // TO DO: assets (photos and drawings)
   });
 }

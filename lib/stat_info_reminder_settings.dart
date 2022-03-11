@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'main.dart';
+import 'dart:core';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 // ~~~~~~~~~~~~| Stat Page |~~~~~~~~~~~~
+
+List<String> ranks = [
+  'Dream Tripper',
+  'Dreamonaut',
+  'Dream Guru',
+  'Dream Cruiser',
+  'Dream Freak',
+  'Basically losing sense of reality'
+];
 
 class StatPage extends StatefulWidget {
   const StatPage({Key? key}) : super(key: key);
@@ -11,7 +23,91 @@ class StatPage extends StatefulWidget {
   State<StatPage> createState() => _StatPageState();
 }
 
+bools() {
+  var lucidLens = 0;
+  for (var i = 0; i < dreams.length; i++) {
+    if (dreams[i].lucid == true) lucidLens++;
+  }
+  return lucidLens;
+}
+
+class DreamRank {
+  String myrank;
+  String mynext;
+  int myleft;
+
+  DreamRank({
+    required this.myrank,
+    required this.myleft,
+    required this.mynext,
+  });
+}
+
+DreamRank myRank =
+    DreamRank(myleft: 30 - dreams.length, myrank: ranks[0], mynext: ranks[1]);
+
+class LucidData {
+  LucidData(this.lucidity, this.percent);
+  final String lucidity;
+  final num percent;
+}
+
 class _StatPageState extends State<StatPage> {
+  var len = dreams.length;
+  var lucidLen = bools();
+  num perLucid =
+      num.parse(((bools() / dreams.length) * 100).toStringAsFixed(2));
+  num perNotLucid =
+      num.parse(((1 - bools() / dreams.length) * 100).toStringAsFixed(2));
+  final _rank = myRank.myrank;
+  final _left = myRank.myleft;
+  final _next = myRank.mynext;
+
+  ranking() {
+    if (dreams.length < 20) {
+      myRank.myrank = ranks[0];
+      myRank.myleft = 20 - dreams.length;
+      myRank.mynext = ranks[1];
+    } else if (dreams.length >= 20 && dreams.length < 50) {
+      myRank.myrank = ranks[1];
+      myRank.myleft = 50 - dreams.length;
+      myRank.mynext = ranks[2];
+    } else if (dreams.length >= 50 && dreams.length < 80) {
+      myRank.myrank = ranks[2];
+      myRank.myleft = 80 - dreams.length;
+      myRank.mynext = ranks[3];
+    } else if (dreams.length >= 80 && dreams.length < 110) {
+      myRank.myrank = ranks[3];
+      myRank.myleft = 110 - dreams.length;
+      myRank.mynext = ranks[4];
+    } else if (dreams.length >= 110 && dreams.length < 140) {
+      myRank.myrank = ranks[4];
+      myRank.myleft = 140 - dreams.length;
+      myRank.mynext = ranks[5];
+    } else if (dreams.length >= 140) {
+      myRank.myrank = ranks[5];
+      myRank.myleft = 0;
+      myRank.mynext = ranks[5];
+    }
+  }
+
+  void getLen() {
+    setState(() {
+      len = dreams.length;
+      lucidLen = bools();
+      ranking();
+      perLucid = lucidLen / len;
+      perNotLucid = 1 - lucidLen / len;
+    });
+  }
+
+  late List<LucidData> _chartData;
+  @override
+  void initState() {
+    _chartData = getChartData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,8 +134,8 @@ class _StatPageState extends State<StatPage> {
               alignment: Alignment.topCenter,
               margin: const EdgeInsets.all(20.0),
               child: Column(
-                children: const <Widget>[
-                  Text(
+                children: <Widget>[
+                  const Text(
                     'Well done! Your rank is:',
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -49,100 +145,134 @@ class _StatPageState extends State<StatPage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
-                    'Space Tripper!',
+                    _rank,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Color.fromARGB(255, 29, 20, 66),
                       fontSize: 24.0,
                       letterSpacing: 1.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  const SizedBox(height: 10),
+                  Text(
+                    'You have $_left dreams left until you become $_next',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Color.fromARGB(255, 29, 20, 66),
+                      fontSize: 16.0,
+                      letterSpacing: 1.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Expanded(
+                    child: SfCircularChart(
+                        legend: Legend(
+                            isVisible: true,
+                            overflowMode: LegendItemOverflowMode.wrap),
+                        series: <CircularSeries>[
+                          PieSeries<LucidData, String>(
+                              dataSource: _chartData,
+                              xValueMapper: (LucidData data, _) =>
+                                  data.lucidity,
+                              yValueMapper: (LucidData data, _) => data.percent,
+                              dataLabelSettings: const DataLabelSettings(
+                                  isVisible: true,
+                                  alignment: ChartAlignment.center))
+                        ]),
+                  )
                 ],
               ),
             ),
           ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(20.0),
-                    alignment: Alignment.topCenter,
-                    margin: const EdgeInsets.fromLTRB(20.0, 5.0, 10.0, 20.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: const <Widget>[
-                        Text(
-                          'Total Number of Dreams',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 29, 20, 66),
-                            fontSize: 10.0,
-                            letterSpacing: 1.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  color: Colors.white,
+                  padding: const EdgeInsets.all(20.0),
+                  alignment: Alignment.topCenter,
+                  margin: const EdgeInsets.fromLTRB(20.0, 5.0, 10.0, 20.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      const Text(
+                        'Total Number of Dreams:',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 29, 20, 66),
+                          fontSize: 9.0,
+                          letterSpacing: 1.0,
+                          fontWeight: FontWeight.bold,
                         ),
-                        SizedBox(height: 140),
-                        Text(
-                          '16',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 29, 20, 66),
-                            fontSize: 60.0,
-                            letterSpacing: 1.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        '$len',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 29, 20, 66),
+                          fontSize: 60.0,
+                          letterSpacing: 1.0,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-                Expanded(
-                  child: Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(20.0),
-                    alignment: Alignment.topCenter,
-                    margin: const EdgeInsets.fromLTRB(10.0, 5.0, 20.0, 20.0),
-                    //margin: EdgeInsets.fromLTRB(left, top, right, bottom),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: const <Widget>[
-                        Text(
-                          '...of which, lucid were',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 29, 20, 66),
-                            fontSize: 10.0,
-                            letterSpacing: 1.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+              ),
+              Expanded(
+                child: Container(
+                  color: Colors.white,
+                  padding: const EdgeInsets.all(20.0),
+                  alignment: Alignment.topCenter,
+                  margin: const EdgeInsets.fromLTRB(10.0, 5.0, 20.0, 20.0),
+                  //margin: EdgeInsets.fromLTRB(left, top, right, bottom),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      const Text(
+                        '..out of them, Lucid:',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 29, 20, 66),
+                          fontSize: 9.0,
+                          letterSpacing: 1.0,
+                          fontWeight: FontWeight.bold,
                         ),
-                        SizedBox(height: 140),
-                        Text(
-                          '16%',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 29, 20, 66),
-                            fontSize: 60.0,
-                            letterSpacing: 1.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        '$lucidLen',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 29, 20, 66),
+                          fontSize: 60.0,
+                          letterSpacing: 1.0,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              ], //children
-            ),
+              ),
+            ], //children
           ),
         ], //Children
       ),
     );
+  }
+
+  List<LucidData> getChartData() {
+    final List<LucidData> chartData = [
+      LucidData('Lucid %', perLucid),
+      LucidData('Not Lucid %', perNotLucid),
+    ];
+    return chartData;
   }
 }
 
@@ -214,7 +344,7 @@ class _InfoPageState extends State<InfoPage> {
 _launchURL() async {
   const url = 'https://www.dreamdictionary.org';
   if (await canLaunch(url)) {
-    await launch(url, forceSafariVC: false);
+    await launch(url, forceWebView: true);
   } else {
     throw 'Could not launch $url';
   }

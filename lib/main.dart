@@ -25,7 +25,7 @@ List<Dream> dreams = [
     lucid: false,
     date: DateTime(2022, 03, 04),
     characters: ['dragon'],
-    place: 'park',
+    place: ['park'],
   ),
   Dream(
     title: 'Climbing Accident',
@@ -49,7 +49,7 @@ List<Dream> dreams = [
     lucid: true,
     date: DateTime(2022, 03, 07),
     characters: ['maimos'],
-    place: 'ypogeio lolas',
+    place: ['ypogeio lolas'],
   ),
   Dream(
     title: 'Life is meaningless',
@@ -72,33 +72,6 @@ List<Dream> dreams = [
         'Tonight we were not in the mood to fight. Dragon came but we just decided to grab a sandwich instead.',
     lucid: true,
     date: DateTime(2022, 03, 10),
-    characters: ['dragon'],
-  ),
-  Dream(
-    title:
-        'Everybody asks what is dragon doing, but noone ever asks how is dragon doing',
-    description:
-        'I am getting to know my buddy dragon and he seems like a top bloke. It had never come to my attention how opressed dragon are in todays neo-feudalistic societies.',
-    lucid: true,
-    date: DateTime(2022, 03, 11),
-    characters: ['dragon'],
-  ),
-  Dream(
-    title:
-        'Everybody asks what is dragon doing, but noone ever asks how is dragon doing',
-    description:
-        'I am getting to know my buddy dragon and he seems like a top bloke. It had never come to my attention how opressed dragon are in todays neo-feudalistic societies.',
-    lucid: true,
-    date: DateTime(2022, 03, 11),
-    characters: ['dragon'],
-  ),
-  Dream(
-    title:
-        'Everybody asks what is dragon doing, but noone ever asks how is dragon doing',
-    description:
-        'I am getting to know my buddy dragon and he seems like a top bloke. It had never come to my attention how opressed dragon are in todays neo-feudalistic societies.',
-    lucid: true,
-    date: DateTime(2022, 03, 11),
     characters: ['dragon'],
   ),
   Dream(
@@ -335,8 +308,9 @@ class DreamList extends StatefulWidget {
 class _DreamListState extends State<DreamList>
     with AfterLayoutMixin<DreamList> {
   final ItemScrollController itemController = ItemScrollController();
-  Dream newDream = Dream(date: selectedDate);
+  //final ItemPositionsListener itemPositionsListener = ItemPositionsListener();
 
+  Dream newDream = Dream(date: selectedDate);
   @override
   void afterFirstLayout(BuildContext context) {
     Future.delayed(
@@ -367,7 +341,7 @@ class _DreamListState extends State<DreamList>
     itemController.scrollTo(
       index: index,
       duration: const Duration(milliseconds: 1300),
-      curve: Curves.easeInOutQuad,
+      curve: Curves.easeInOutCubic,
     );
   }
 
@@ -388,20 +362,50 @@ class _DreamListState extends State<DreamList>
           Row(
             children: [
               TextButton(
-                child: Text(
-                    'index: $selectedDateIndex\n ${dMy.format(selectedDate)}'),
+                child: RichText(
+                  text: TextSpan(
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: '      Jump to\n',
+                        style: TextStyle(
+                            fontSize: 14.0, color: Colors.deepPurple[900]),
+                      ),
+                      TextSpan(
+                        text: dMy.format(selectedDate),
+                        style: TextStyle(
+                          fontSize: 19.0,
+                          color: Colors.deepPurple[800],
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 onPressed: () {
                   scrollToItem(selectedDateIndex);
                 },
               ),
               const SizedBox(width: 30.0),
-              const Text(
-                'ADD DREAM',
-                style: TextStyle(
-                  color: Color.fromARGB(255, 29, 20, 66),
-                  fontSize: 16.0,
-                  letterSpacing: 1.0,
-                  fontWeight: FontWeight.bold,
+              RichText(
+                text: const TextSpan(
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: 'ADD DREAM\n',
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 29, 20, 66),
+                        fontSize: 18.0,
+                        letterSpacing: 1.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextSpan(
+                      text: '<- on selected date',
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 29, 20, 66),
+                        fontSize: 12.0,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(width: 12.0),
@@ -425,9 +429,12 @@ class _DreamListState extends State<DreamList>
       body: ScrollablePositionedList.builder(
         itemScrollController: itemController,
         itemCount: dreams.length,
+
         itemBuilder: (context, index) {
           return DreamCard(dream: dreams[index]);
         },
+        //itemPositionsListener: ItemPositionsListener(),
+        //  children: dreams.map((dream) => DreamCard(dream: dream)).toList(),
       ),
     );
   }
@@ -443,10 +450,88 @@ class AddDream extends StatefulWidget {
 }
 
 class _AddDreamState extends State<AddDream> {
+  Future createAlertDialogPlaces(BuildContext context) {
+    TextEditingController charCon = TextEditingController();
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Add Places"),
+            content: TextField(
+              controller: charCon,
+              decoration: const InputDecoration(
+                  hintText: 'eg. Dragonstone, Komodo, China'),
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                elevation: 5.0,
+                child: const Text('Submit'),
+                onPressed: () {
+                  Navigator.of(context).pop(charCon.text.toString());
+                },
+              )
+            ],
+          );
+        });
+  }
+
+  Future createAlertDialog(BuildContext context) {
+    TextEditingController charCon = TextEditingController();
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Add Characters"),
+            content: TextField(
+              controller: charCon,
+              decoration: const InputDecoration(
+                  hintText: 'eg. Drogon, Mushu, Toothless, Haku'),
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                elevation: 5.0,
+                child: const Text('Submit'),
+                onPressed: () {
+                  Navigator.of(context).pop(charCon.text.toString());
+                },
+              )
+            ],
+          );
+        });
+  }
+
+  Future createAlertDialogThemes(BuildContext context) {
+    TextEditingController charCon = TextEditingController();
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Add Recurring Themes"),
+            content: TextField(
+              controller: charCon,
+              decoration: const InputDecoration(
+                  hintText: 'eg. marrying the dragon from Shrek'),
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                elevation: 5.0,
+                child: const Text('Submit'),
+                onPressed: () {
+                  Navigator.of(context).pop(charCon.text.toString());
+                },
+              )
+            ],
+          );
+        });
+  }
+
   bool _lucid = false;
   bool? lucid = false;
   dynamic _title;
   dynamic _description;
+  dynamic _characters = 'null';
+  dynamic _places = 'null';
+  dynamic _themes = 'null';
   Dream dreamy = Dream(date: selectedDate);
   final titleCon = TextEditingController();
   final descCon = TextEditingController();
@@ -470,6 +555,124 @@ class _AddDreamState extends State<AddDream> {
             ),
           ),
         ),
+        actions: [
+          Row(
+            children: [
+              FloatingActionButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Lucid Dreaming Tips :)'),
+                          content: RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                    text: 'Keeping track of reoccuring\n',
+                                    style: TextStyle(
+                                      color: Colors.deepPurple[900],
+                                      fontSize: 18.0,
+                                    )),
+                                WidgetSpan(
+                                    child: Icon(Icons.account_circle_outlined,
+                                        color: Colors.deepPurple[900],
+                                        size: 20.0)),
+                                TextSpan(
+                                    text: ' characters, ',
+                                    style: TextStyle(
+                                      color: Colors.deepPurple[900],
+                                      fontSize: 18.0,
+                                    )),
+                                WidgetSpan(
+                                    child: Icon(Icons.location_on_outlined,
+                                        color: Colors.deepPurple[900],
+                                        size: 20.0)),
+                                TextSpan(
+                                    text: ' places and\n',
+                                    style: TextStyle(
+                                      color: Colors.deepPurple[900],
+                                      fontSize: 18.0,
+                                    )),
+                                WidgetSpan(
+                                    child: Icon(Icons.extension_outlined,
+                                        color: Colors.deepPurple[900],
+                                        size: 20.0)),
+                                TextSpan(
+                                    text:
+                                        'themes that appear in your dreams makes achieving your lucid goals easier. Make sure to do so using the toolbar.\nDream Catcher',
+                                    style: TextStyle(
+                                      color: Colors.deepPurple[900],
+                                      fontSize: 18.0,
+                                    )),
+                                WidgetSpan(
+                                    child: Icon(Icons.task_alt_rounded,
+                                        color: Colors.deepPurple[900],
+                                        size: 20.0)),
+                                TextSpan(
+                                    text: ' also enables you to add ',
+                                    style: TextStyle(
+                                      color: Colors.deepPurple[900],
+                                      fontSize: 18.0,
+                                    )),
+                                WidgetSpan(
+                                    child: Icon(Icons.photo_camera_outlined,
+                                        color: Colors.deepPurple[900],
+                                        size: 20.0)),
+                                TextSpan(
+                                    text: ' photos and ',
+                                    style: TextStyle(
+                                      color: Colors.deepPurple[900],
+                                      fontSize: 18.0,
+                                    )),
+                                WidgetSpan(
+                                    child: Icon(Icons.create_outlined,
+                                        color: Colors.deepPurple[900],
+                                        size: 20.0)),
+                                TextSpan(
+                                    text:
+                                        ' sketches related to your dreams.\n\nSweet Dreams!',
+                                    style: TextStyle(
+                                      color: Colors.deepPurple[900],
+                                      fontSize: 18.0,
+                                    )),
+                              ],
+                            ),
+                          ),
+                          actions: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                TextButton(
+                                  child: const Text('Ok'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: const Text('Arigato Gozaimasu'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        );
+                      });
+                },
+                mini: true,
+                elevation: 10.0,
+                backgroundColor: Colors.deepPurple[200],
+                child: const Icon(
+                  Icons.question_mark_rounded,
+                  color: Color.fromARGB(255, 29, 20, 66),
+                ),
+              ),
+              const SizedBox(width: 15.0)
+            ],
+          ),
+        ],
       ),
       body: Column(
         children: <Widget>[
@@ -493,11 +696,13 @@ class _AddDreamState extends State<AddDream> {
                     _title = titleCon.text;
                     _description = descCon.text;
                     _lucid = lucid!;
-                    dreamy.characters = ['dragon'];
+                    dreamy.characters = ['$_characters'];
                     dreamy.title = _title;
                     dreamy.description = _description;
                     dreamy.lucid = _lucid;
                     dreamy.date = selectedDate;
+                    dreamy.place = ['$_places'];
+                    dreamy.theme = ['$_themes'];
                   });
                   // Navigator.of(context).pop(
                   //     MaterialPageRoute(
@@ -539,16 +744,20 @@ class _AddDreamState extends State<AddDream> {
                 controller: descCon,
                 textAlignVertical: TextAlignVertical.top,
                 decoration: InputDecoration(
-                    hintText: "Input text |",
-                    alignLabelWithHint: true,
-                    label:
-                        const Text('Description', textAlign: TextAlign.start),
-                    labelStyle:
-                        const TextStyle(fontSize: 16, color: Colors.deepPurple),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    suffixIcon: Column(
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintText: "Input text |",
+                  alignLabelWithHint: true,
+                  label: const Text('Description', textAlign: TextAlign.start),
+                  labelStyle:
+                      const TextStyle(fontSize: 16, color: Colors.deepPurple),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+
+                  // column of iconbuttons (characters, places etc)
+                  suffixIcon: SafeArea(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       // added line
                       // mainAxisSize: MainAxisSize.min,
@@ -564,25 +773,50 @@ class _AddDreamState extends State<AddDream> {
                           icon: const Icon(Icons.create_outlined),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            createAlertDialog(context).then((onValue) {
+                              SnackBar mySnackbar = const SnackBar(
+                                  content: Text("Added Characters"));
+                              _characters = onValue.toString();
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(mySnackbar);
+                            });
+                          },
                           icon: const Icon(Icons.account_circle_outlined),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            createAlertDialogPlaces(context).then((onValue) {
+                              SnackBar mySnackbar = const SnackBar(
+                                  content: Text("Added Locations"));
+                              _places = onValue.toString();
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(mySnackbar);
+                            });
+                          },
                           icon: const Icon(Icons.location_on_outlined),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            createAlertDialogThemes(context).then((onValue) {
+                              SnackBar mySnackbar =
+                                  const SnackBar(content: Text("Added Themes"));
+                              _themes = onValue.toString();
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(mySnackbar);
+                            });
+                          },
                           icon: const Icon(Icons.extension_outlined),
                         ),
                       ],
                     ),
-                    fillColor: Colors.white,
-                    filled: true),
+                  ),
+                ),
                 keyboardType: TextInputType.text,
               ),
             ),
           ),
+          //Text('these are cute $_characters')
         ],
       ),
     );

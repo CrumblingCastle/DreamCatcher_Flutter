@@ -36,9 +36,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   intl: ^0.17.0
   flutter_alarm_clock: ^0.0.2
-  url_launcher:
+  url_launcher: ^6.0.9
   scrollable_positioned_list: ^0.2.3
   after_layout: ^1.1.0
+  syncfusion_flutter_charts: ^19.4.55
 
 dev_dependencies:
   flutter_test:
