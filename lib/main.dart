@@ -530,6 +530,23 @@ class _AddDreamState extends State<AddDream> {
         });
   }
 
+  dynamic newImage;
+
+  void updateInformation(Image information) {
+    setState(() {
+      newImage = information;
+    });
+  }
+
+  void moveToDrawPage() async {
+    final drawing = await Navigator.push(
+      context,
+      CupertinoPageRoute(
+          fullscreenDialog: true, builder: (context) => const DrawPage()),
+    );
+    updateInformation(drawing);
+  }
+
   bool _lucid = false;
   bool? lucid = false;
   dynamic _title;
@@ -553,8 +570,11 @@ class _AddDreamState extends State<AddDream> {
       // print('i'm here');
       imageURI = image;
       // ignore: avoid_print
-      if (imageURI != null) print(imageURI);
+      if (imageURI != null) {
+        newImage = Image.file(File(imageURI.path));
+      }
     });
+    throw ('kwstas palialexis');
   }
 
   @override
@@ -725,9 +745,7 @@ class _AddDreamState extends State<AddDream> {
                     dreamy.date = selectedDate;
                     dreamy.place = ['$_places'];
                     dreamy.theme = ['$_themes'];
-                    if (imageURI != null) {
-                      dreamy.dreamImage = Image.file(File(imageURI.path));
-                    }
+                    dreamy.dreamImage = newImage;
                   });
                   // Navigator.of(context).pop(
                   //     MaterialPageRoute(
@@ -792,23 +810,28 @@ class _AddDreamState extends State<AddDream> {
                         IconButton(
                           onPressed: () async {
                             getImageFromCameraGallery(true);
+                            sleep(const Duration(seconds: 1));
+                            SnackBar mySnackbar =
+                                const SnackBar(content: Text("Added Photos"));
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(mySnackbar);
                           },
                           icon: const Icon(Icons.photo_camera_outlined),
                         ),
                         IconButton(
                           onPressed: () async {
                             getImageFromCameraGallery(false);
+                            sleep(const Duration(seconds: 1));
+                            SnackBar mySnackbar =
+                                const SnackBar(content: Text("Added Photos"));
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(mySnackbar);
                           },
                           icon: const Icon(Icons.image_outlined),
                         ),
                         IconButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => const DrawPage(),
-                              ),
-                            );
+                            moveToDrawPage();
                           },
                           icon: const Icon(Icons.create_outlined),
                         ),

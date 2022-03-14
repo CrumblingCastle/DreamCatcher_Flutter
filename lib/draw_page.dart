@@ -10,7 +10,9 @@ class DrawPage extends StatefulWidget {
 
 class _DrawPageState extends State<DrawPage> {
   late SignatureController controller;
-  late Image drawing;
+  dynamic drawing;
+
+//  void saveImage() {}
 
   @override
   void initState() {
@@ -43,9 +45,10 @@ class _DrawPageState extends State<DrawPage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               IconButton(
-                onPressed: () {
+                onPressed: () async {
                   if (controller.isNotEmpty) {
-                    // controller.toImage(drawing);
+                    drawing = exportDrawing();
+                    // drawing = controller.toImage();
                   }
                   Navigator.pop(context, drawing);
                 },
@@ -63,5 +66,11 @@ class _DrawPageState extends State<DrawPage> {
         )
       ]),
     );
+  }
+
+  exportDrawing() async {
+    // final exportController = controller;
+    final drawing = await controller.toPngBytes();
+    return drawing;
   }
 }
