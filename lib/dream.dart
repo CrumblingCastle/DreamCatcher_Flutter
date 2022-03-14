@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'package:flutter/material.dart';
 
 class Dream {
   String title;
@@ -8,6 +9,8 @@ class Dream {
   List<String> characters;
   List<String> place;
   List<String> theme;
+  Image dreamImage;
+
   // TO DO: assets (photos and drawings)
 
   Dream({
@@ -18,6 +21,10 @@ class Dream {
     this.characters = const ['null'],
     this.place = const ['null'],
     this.theme = const ['null'],
+    this.dreamImage = const Image(
+      image: NetworkImage(
+          'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
+    ),
     // TO DO: assets (photos and drawings)
   });
 }

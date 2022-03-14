@@ -40,6 +40,8 @@ dependencies:
   scrollable_positioned_list: ^0.2.3
   after_layout: ^1.1.0
   syncfusion_flutter_charts: ^19.4.55
+  signature: ^5.0.0
+  image_picker: ^0.8.4+11
 
 dev_dependencies:
   flutter_test:

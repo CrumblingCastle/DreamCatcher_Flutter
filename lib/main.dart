@@ -1,13 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/draw_page.dart';
 import 'dream.dart';
 import 'dateToIndex.dart';
 import 'dream_card.dart';
 import 'stat_info_reminder_settings.dart';
+import 'draw_page.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 // ignore: unused_import
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:image_picker/image_picker.dart';
 
 void main() => runApp(MaterialApp(
       // ignore: prefer_const_constructors
@@ -535,11 +540,28 @@ class _AddDreamState extends State<AddDream> {
   Dream dreamy = Dream(date: selectedDate);
   final titleCon = TextEditingController();
   final descCon = TextEditingController();
+  dynamic imageURI;
+
+  //
+
+  final ImagePicker _picker = ImagePicker();
+
+  Future getImageFromCameraGallery(bool isCamera) async {
+    var image = await _picker.pickImage(
+        source: (isCamera == true) ? ImageSource.camera : ImageSource.gallery);
+    setState(() {
+      // print('i'm here');
+      imageURI = image;
+      // ignore: avoid_print
+      if (imageURI != null) print(imageURI);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.deepPurple[50],
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('Add Dream on ${dMy.format(selectedDate)}'),
         centerTitle: true,
@@ -703,6 +725,9 @@ class _AddDreamState extends State<AddDream> {
                     dreamy.date = selectedDate;
                     dreamy.place = ['$_places'];
                     dreamy.theme = ['$_themes'];
+                    if (imageURI != null) {
+                      dreamy.dreamImage = Image.file(File(imageURI.path));
+                    }
                   });
                   // Navigator.of(context).pop(
                   //     MaterialPageRoute(
@@ -735,7 +760,7 @@ class _AddDreamState extends State<AddDream> {
           ),
           const SizedBox(height: 10.0),
           // ~~~~~~~~~~ DESCRIPTION TEXT-BOX + icon buttons
-          Flexible(
+          Expanded(
             child: Container(
               margin: const EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 15.0),
               child: TextField(
@@ -765,11 +790,26 @@ class _AddDreamState extends State<AddDream> {
                       children: <Widget>[
                         const SizedBox(height: 10.0),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            getImageFromCameraGallery(true);
+                          },
                           icon: const Icon(Icons.photo_camera_outlined),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            getImageFromCameraGallery(false);
+                          },
+                          icon: const Icon(Icons.image_outlined),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const DrawPage(),
+                              ),
+                            );
+                          },
                           icon: const Icon(Icons.create_outlined),
                         ),
                         IconButton(

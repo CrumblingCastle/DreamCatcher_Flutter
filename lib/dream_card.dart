@@ -19,6 +19,7 @@ class DreamCard extends StatefulWidget {
 
 class _DreamCardState extends State<DreamCard> {
   bool pressed = false;
+  final borderRadius = BorderRadius.circular(12); // Image border
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +47,16 @@ class _DreamCardState extends State<DreamCard> {
                   child: const Text('Delete'),
                   onPressed: () {
                     dreams.remove(widget.dream);
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                    Navigator.of(context).pop();
+
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) =>
+                              const DreamList(),
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        ),
+                        ModalRoute.withName('/'));
                   },
                 ),
                 TextButton(
@@ -160,7 +169,7 @@ class _DreamCardState extends State<DreamCard> {
                         ),
                       ),
                       TextSpan(
-                        text: widget.dream.place.toString(),
+                        text: '${widget.dream.place.toString()} ',
                         style: TextStyle(color: Colors.blue[700]),
                       ),
                     ],
@@ -171,7 +180,7 @@ class _DreamCardState extends State<DreamCard> {
                         color: Colors.blue[700],
                       )),
                       TextSpan(
-                        text: widget.dream.characters.toString(),
+                        text: ' ${widget.dream.characters.toString()} ',
                         style: TextStyle(color: Colors.blue[700]),
                       ),
                     ],
@@ -189,6 +198,26 @@ class _DreamCardState extends State<DreamCard> {
                   ],
                 ),
               ),
+              if (widget.dream.dreamImage.image !=
+                  const NetworkImage(
+                      'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg')) ...[
+                const SizedBox(height: 10.0),
+                Container(
+                  padding: const EdgeInsets.all(2), // Border width
+                  decoration: BoxDecoration(
+                      color: Colors.deepPurple[200],
+                      borderRadius: borderRadius),
+                  child: ClipRRect(
+                    borderRadius: borderRadius,
+                    child: SizedBox.fromSize(
+                      child: Image(
+                        image: widget.dream.dreamImage.image,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                )
+              ],
             ],
           ),
         ),

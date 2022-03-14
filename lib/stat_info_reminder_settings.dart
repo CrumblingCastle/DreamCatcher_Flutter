@@ -170,6 +170,10 @@ class _StatPageState extends State<StatPage> {
                   const SizedBox(height: 10),
                   Expanded(
                     child: SfCircularChart(
+                        palette: <Color>[
+                          Colors.deepPurple.shade400,
+                          Colors.deepPurple.shade200
+                        ],
                         legend: Legend(
                             isVisible: true,
                             overflowMode: LegendItemOverflowMode.wrap),
