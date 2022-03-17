@@ -484,6 +484,9 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  bool soulAbsorbed = false;
+  int desperateCounter = -1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -498,6 +501,135 @@ class _SettingsState extends State<Settings> {
           icon: const Icon(Icons.arrow_back_ios_new_rounded,
               color: Color.fromARGB(255, 29, 20, 66)),
           onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(height: 25.0),
+            const Text(
+              'By switching the switch\nI vow my soul to the witch\nSwearing not to ask upon which\nThat thy soul shall once be reached',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontFamily: 'Ave',
+                  letterSpacing: 1.5,
+                  color: Color.fromARGB(255, 50, 12, 117),
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 75,
+              width: 90,
+              child: FittedBox(
+                fit: BoxFit.fill,
+                child: Switch(
+                  value: soulAbsorbed,
+                  onChanged: (bool newSwitch) {
+                    setState(() {
+                      soulAbsorbed = desperateCounter > 24
+                          ? () {
+                              desperateCounter++;
+                              return false;
+                            }()
+                          : () {
+                              desperateCounter++;
+                              return true;
+                            }();
+                    });
+                  },
+                ),
+              ),
+            ),
+            Text(
+              desperateCounter < 0
+                  ? ''
+                  : desperateCounter < 26
+                      ? 'S O U L\nH A R V E S T E D'
+                      : 'S O U L\ndeemed useless and returned lol',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  fontFamily: 'Shadow',
+                  color: Color.fromARGB(255, 50, 12, 117),
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w900),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              desperateCounter < 1 || desperateCounter == 26
+                  ? ''
+                  : desperateCounter < 26
+                      ? 'Sorry dear, no coming back..\nyour soul has already been absorbed.'
+                      : 'Nope, not gonna take it back either.\nYou should seriously reevaluate your life choices.\n~Yeet~',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  // fontFamily: 'Shadow',
+                  color: Color.fromARGB(255, 50, 12, 117),
+                  fontSize: 15.0),
+            ),
+            const SizedBox(height: 10.0),
+            Text(
+              desperateCounter < 5
+                  ? ''
+                  : desperateCounter < 26
+                      ? 'hahaha it starts being funny.. $desperateCounter hopeless tries so far.\nI wonder how far your desparation can go :)'
+                      : desperateCounter < 100
+                          ? ''
+                          : '\nDude, you have tried it like $desperateCounter times.\nStop it.\nGet some help.\n',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  // fontFamily: 'Shadow',
+                  color: Color.fromARGB(255, 50, 12, 117),
+                  fontSize: 15.0),
+            ),
+            const SizedBox(height: 10.0),
+            Text(
+              desperateCounter < 10
+                  ? ''
+                  : desperateCounter < 26
+                      ? 'Still nope.\n'
+                      : desperateCounter < 142
+                          ? ''
+                          : 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  // fontFamily: 'Shadow',
+                  color: Color.fromARGB(255, 50, 12, 117),
+                  fontSize: 15.0),
+            ),
+            Text(
+              desperateCounter < 15 || desperateCounter > 25
+                  ? ''
+                  : 'Yeah whatever, get over it. Soul. Mine.\n',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  // fontFamily: 'Shadow',
+                  color: Color.fromARGB(255, 50, 12, 117),
+                  fontSize: 15.0),
+            ),
+            Text(
+              desperateCounter < 20 || desperateCounter > 25
+                  ? ''
+                  : 'Starting to get on my nerves here.. >:(\n',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                // fontFamily: 'Shadow',
+                color: Color.fromARGB(255, 50, 12, 117),
+                fontSize: 15.0,
+              ),
+            ),
+            Text(
+              desperateCounter < 23 || desperateCounter > 25
+                  ? ''
+                  : 'Enough. I decided it is worthless anyway lol.\nFew more litlle peasant.',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                // fontFamily: 'Shadow',
+                color: Color.fromARGB(255, 50, 12, 117),
+                fontSize: 15.0,
+              ),
+            ),
+          ],
         ),
       ),
     );

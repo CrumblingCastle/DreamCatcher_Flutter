@@ -1,5 +1,5 @@
+import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/draw_page.dart';
 import 'dream.dart';
@@ -531,15 +531,16 @@ class _AddDreamState extends State<AddDream> {
   }
 
   dynamic newImage;
+  dynamic anime;
 
-  void updateInformation(Image information) {
+  void updateInformation(dynamic information) {
     setState(() {
-      newImage = information;
+      anime = information;
     });
   }
 
   void moveToDrawPage() async {
-    final drawing = await Navigator.push(
+    dynamic drawing = await Navigator.push(
       context,
       CupertinoPageRoute(
           fullscreenDialog: true, builder: (context) => const DrawPage()),
@@ -745,7 +746,11 @@ class _AddDreamState extends State<AddDream> {
                     dreamy.date = selectedDate;
                     dreamy.place = ['$_places'];
                     dreamy.theme = ['$_themes'];
-                    dreamy.dreamImage = newImage;
+                    if (newImage != null) {
+                      dreamy.dreamImage = newImage;
+                    } else if (anime != null) {
+                      dreamy.dreamImage = Image.memory(anime);
+                    }
                   });
                   // Navigator.of(context).pop(
                   //     MaterialPageRoute(
@@ -830,7 +835,7 @@ class _AddDreamState extends State<AddDream> {
                           icon: const Icon(Icons.image_outlined),
                         ),
                         IconButton(
-                          onPressed: () {
+                          onPressed: () async {
                             moveToDrawPage();
                           },
                           icon: const Icon(Icons.create_outlined),
