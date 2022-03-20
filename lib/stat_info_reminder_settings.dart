@@ -308,8 +308,8 @@ class _InfoPageState extends State<InfoPage> {
         ),
         body: Center(
             child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            const SizedBox(height: 40),
             Container(
               margin: const EdgeInsets.all(15.0),
               child: const Text(
@@ -323,7 +323,7 @@ class _InfoPageState extends State<InfoPage> {
                 ),
               ),
             ),
-            const SizedBox(height: 40),
+            //  const SizedBox(height: 40),
             Container(
               alignment: Alignment.center,
               height: 60,
@@ -340,15 +340,17 @@ class _InfoPageState extends State<InfoPage> {
                 ),
               ),
             ),
+            const SizedBox(height: 40),
           ],
         )));
   }
 }
 
 _launchURL() async {
-  const url = 'https://www.dreamdictionary.org';
+  // ignore: prefer_const_declarations
+  final url = 'https://www.dreamdictionary.org/';
   if (await canLaunch(url)) {
-    await launch(url, forceWebView: true);
+    await launch(url);
   } else {
     throw 'Could not launch $url';
   }
@@ -484,8 +486,8 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  bool soulAbsorbed = false;
-  int desperateCounter = -1;
+  // bool soulAbsorbed = false;
+  // int desperateCounter = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -518,6 +520,7 @@ class _SettingsState extends State<Settings> {
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold),
             ),
+            // SWITCH
             SizedBox(
               height: 75,
               width: 90,
@@ -541,19 +544,48 @@ class _SettingsState extends State<Settings> {
                 ),
               ),
             ),
-            Text(
-              desperateCounter < 0
-                  ? ''
-                  : desperateCounter < 26
-                      ? 'S O U L\nH A R V E S T E D'
-                      : 'S O U L\ndeemed useless and returned lol',
+            RichText(
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                  fontFamily: 'Shadow',
-                  color: Color.fromARGB(255, 50, 12, 117),
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w900),
+              text: TextSpan(children: [
+                TextSpan(
+                  text: desperateCounter < 0
+                      ? ''
+                      : desperateCounter < 26
+                          ? 'S O U L\nH A R V E S T E D'
+                          : 'S O U L\ndeemed useless and returned lol\n\n',
+                  // textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontFamily: 'Shadow',
+                      color: Color.fromARGB(255, 50, 12, 117),
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w900),
+                ),
+                TextSpan(
+                  text: desperateCounter < 26 ? '' : 'happy now?',
+                  // textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    // fontFamily: 'Shadow',
+                    color: Color.fromARGB(255, 50, 12, 117),
+                    fontSize: 15.0,
+
+                    // fontWeight: FontWeight.w900),
+                  ),
+                )
+              ]),
             ),
+            // Text(
+            //   desperateCounter < 0
+            //       ? ''
+            //       : desperateCounter < 26
+            //           ? 'S O U L\nH A R V E S T E D'
+            //           : 'S O U L\ndeemed useless and returned lol\nhappy now?',
+            //   textAlign: TextAlign.center,
+            //   style: const TextStyle(
+            //       fontFamily: 'Shadow',
+            //       color: Color.fromARGB(255, 50, 12, 117),
+            //       fontSize: 20.0,
+            //       fontWeight: FontWeight.w900),
+            // ),
             const SizedBox(height: 10),
             Text(
               desperateCounter < 1 || desperateCounter == 26
@@ -569,7 +601,7 @@ class _SettingsState extends State<Settings> {
             ),
             const SizedBox(height: 10.0),
             Text(
-              desperateCounter < 5
+              desperateCounter < 3
                   ? ''
                   : desperateCounter < 26
                       ? 'hahaha it starts being funny.. $desperateCounter hopeless tries so far.\nI wonder how far your desparation can go :)'
@@ -584,7 +616,7 @@ class _SettingsState extends State<Settings> {
             ),
             const SizedBox(height: 10.0),
             Text(
-              desperateCounter < 10
+              desperateCounter < 8
                   ? ''
                   : desperateCounter < 26
                       ? 'Still nope.\n'
@@ -598,7 +630,7 @@ class _SettingsState extends State<Settings> {
                   fontSize: 15.0),
             ),
             Text(
-              desperateCounter < 15 || desperateCounter > 25
+              desperateCounter < 14 || desperateCounter > 25
                   ? ''
                   : 'Yeah whatever, get over it. Soul. Mine.\n',
               textAlign: TextAlign.center,
@@ -608,7 +640,7 @@ class _SettingsState extends State<Settings> {
                   fontSize: 15.0),
             ),
             Text(
-              desperateCounter < 20 || desperateCounter > 25
+              desperateCounter < 18 || desperateCounter > 25
                   ? ''
                   : 'Starting to get on my nerves here.. >:(\n',
               textAlign: TextAlign.center,
@@ -621,7 +653,7 @@ class _SettingsState extends State<Settings> {
             Text(
               desperateCounter < 23 || desperateCounter > 25
                   ? ''
-                  : 'Enough. I decided it is worthless anyway lol.\nFew more litlle peasant.',
+                  : 'Enough. I decided it is worthless anyway lol.\nJust get it back..',
               textAlign: TextAlign.center,
               style: const TextStyle(
                 // fontFamily: 'Shadow',

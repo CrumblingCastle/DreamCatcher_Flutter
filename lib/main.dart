@@ -29,118 +29,125 @@ List<Dream> dreams = [
     description: 'I was walking in a park and a dragon attacked me.',
     lucid: false,
     date: DateTime(2022, 03, 04),
-    characters: ['dragon'],
+    characters: ['red dragon'],
     place: ['park'],
   ),
   Dream(
-    title: 'Climbing Accident',
-    description:
-        'I was climbing on a steep rock and another dragon attacked me.',
-    lucid: false,
-    date: DateTime(2022, 03, 05),
-    characters: ['dragon', 'coach Victor'],
-  ),
+      title: 'Climbing Accident',
+      description:
+          'I was climbing on a steep rock and another dragon attacked me.',
+      lucid: false,
+      date: DateTime(2022, 03, 05),
+      characters: ['blue dragon', 'coach Victor'],
+      place: ['climbing spot byt the sea'],
+      theme: ['getting attacked by a dragon'],
+      dreamImage: const Image(
+          image: NetworkImage(
+              'https://media-cdn.tripadvisor.com/media/photo-s/13/8c/de/2f/sea-cliff-climbing-devon.jpg'))),
   Dream(
     title: 'Dragon attack',
     description:
-        'I was getting attacked by a dragon and all of sudden another dragon attacked me.. these dragons are getting out of hand imo.',
+        'I was getting attacked by a red dragon and all of sudden another dragon, a blue one, attacked me, a purple one.. these dragons are getting out of hand imo.',
     lucid: true,
     date: DateTime(2022, 03, 06),
+    characters: ['red dragon', 'blue dragon'],
   ),
+  Dream(
+      title: 'Baby Dragon',
+      description:
+          'Turns out the red and blue dragon are a married couple. And the have a baby boy! He looks kinda funny but I think he\'ll grow to become a fine man. Here\'s a drawing I made of him.',
+      date: DateTime(2022, 03, 07),
+      lucid: true,
+      characters: ['red dragon', 'blue dragon', 'purple dragon'],
+      dreamImage: Image.asset('assets/images/drawing.png')),
   Dream(
     title: 'Awaiting for this bloke to come',
     description:
-        'Well, tonight i was just playing table tenis, waiting for the dragon. He never came :( im sad.',
+        'Well, tonight i was just playing table tennis, waiting for the dragon. He never came :( im sad.',
     lucid: true,
     date: DateTime(2022, 03, 07),
-    characters: ['maimos'],
+    characters: ['my dragon friend'],
     place: ['ypogeio lolas'],
   ),
   Dream(
-    title: 'Life is meaningless',
-    description:
-        'I was getting angry with these dragons.. but now, now i see. I finally realise they were my only real friends.',
-    lucid: false,
-    date: DateTime(2022, 03, 08),
-  ),
+      title: 'Life is meaningless',
+      description:
+          'I was getting angry with these dragons.. but now, now i see. I finally realise they were my only real friends.',
+      lucid: false,
+      date: DateTime(2022, 03, 08),
+      theme: ['me being constantly surrounded by dragon, no humans wtf']),
   Dream(
-    title: 'Dragon attack mothafackas',
-    description:
-        'WHAT A FIGHT! Dragon is back when nobody expected him. I was chilling in the park and BAM! Dragon. We had a nice fight, then saluted eachother and went on with our days',
-    lucid: true,
-    date: DateTime(2022, 03, 09),
-    characters: ['dragon'],
-  ),
+      title: 'Dragon attack mothafackas',
+      description:
+          'WHAT A FIGHT! Dragon is back when nobody expected him. I was chilling in the park and BAM! Dragon. We had a nice fight, then saluted each other and went on with our days',
+      lucid: true,
+      date: DateTime(2022, 03, 09),
+      characters: ['my dragon fight buddies'],
+      place: ['park'],
+      theme: ['dragon fights for fun']),
   Dream(
-    title: 'Lunch with dragon',
-    description:
-        'Tonight we were not in the mood to fight. Dragon came but we just decided to grab a sandwich instead.',
-    lucid: true,
-    date: DateTime(2022, 03, 10),
-    characters: ['dragon'],
-  ),
+      title: 'Dragon fight club',
+      description:
+          'Tonight we were not in the mood to fight. Dragon came but we just decided to grab a sandwich instead. We talked about starting a dragon fight club tho',
+      lucid: true,
+      date: DateTime(2022, 03, 10),
+      characters: ['dragon'],
+      theme: ['eating lunch with mah dragons']),
   Dream(
-    title:
-        'Everybody asks what is dragon doing, but noone ever asks how is dragon doing',
-    description:
-        'I am getting to know my buddy dragon and he seems like a top bloke. It had never come to my attention how opressed dragon are in todays neo-feudalistic societies.',
-    lucid: true,
-    date: DateTime(2022, 03, 11),
-    characters: ['dragon'],
-  ),
+      title: 'wait, am I a DRAGON?????',
+      description:
+          'I was wondering why I\'m always surrounded by dragons. My friends all are dragons. Damn I even got a dragon girlfriend. MAYBE I AM A DRAGON??!',
+      lucid: true,
+      date: DateTime(2022, 03, 11),
+      characters: ['dragons'],
+      dreamImage: const Image(
+          image:
+              NetworkImage('https://pbs.twimg.com/media/B97B_xsCcAANyGJ.jpg'))),
   Dream(
-    title: 'Awaiting for this bloke to come',
+    title: 'Not feeling it :(',
     description:
-        'Well, tonight i was just playing table tenis, waiting for the dragon. He never came :( im sad.',
+        'I\'m not feeling myself as of late. These dreams aren\'t fun anymore. I know I\'m not a dragon, but that\'s the only thing I\'ve been thinking about, and it\'s taken a toll on me. My girlfriend broke up with me cuz I can\'t pull my shit together. This is bad. :(',
     lucid: true,
     date: DateTime(2022, 03, 12),
-    characters: ['maimos'],
+    theme: ['existential crisis'],
   ),
   Dream(
-    title: 'Awaiting for this bloke to come',
+    title: 'Real People',
     description:
-        'Well, tonight i was just playing table tenis, waiting for the dragon. He never came :( im sad.',
+        'I had a revelation tonight. I\'ve been lucid all this time. I could have just create my own reality in my dreams, but I never did. So last night I thought about having my people friends in my dreams and BOOM! Here they are. We had a barbeque. The dragons came too but they ate all the food so I am not inviting them again. Then we all had a few drinks and had a blast!',
     lucid: true,
     date: DateTime(2022, 03, 13),
-    characters: ['maimos'],
+    characters: ['friends', 'dragon'],
   ),
   Dream(
-    title: 'Awaiting for this bloke to come',
-    description:
-        'Well, tonight i was just playing table tenis, waiting for the dragon. He never came :( im sad.',
-    lucid: true,
-    date: DateTime(2022, 03, 14),
-    characters: ['maimos'],
-  ),
+      title: 'Old Man',
+      description:
+          'Today an old man came to me while I was chilling by the dragon lake. He told me "Son, you have to stop living in these dreams, and return in reality, where you actually are a loser". Well that old man looked very old and like he had lost it. So, since I was lucid I made him disappear. I don\'t need his negative energy.',
+      lucid: true,
+      date: DateTime(2022, 03, 14),
+      characters: ['old man'],
+      place: ['dragon lake']),
   Dream(
-    title: 'Awaiting for this bloke to come',
+    title: 'Leonardo Di Caprio',
     description:
-        'Well, tonight i was just playing table tenis, waiting for the dragon. He never came :( im sad.',
-    lucid: true,
-    date: DateTime(2022, 03, 17),
-    characters: ['maimos'],
-  ),
-  Dream(
-    title: 'Awaiting for this bloke to come',
-    description:
-        'Well, tonight i was just playing table tenis, waiting for the dragon. He never came :( im sad.',
+        'LEO WAS TALKING TO ME IN MY DREAM LAST NIGHT. For some reason I was attending the oscars. No dragons this time, the room was full of celebrities. Then suddenly I see Leonardo di Caprio !!!! coming to me. Then he told me what the old man has told me exactly. I was shocked. He said that he once was in a similar situation. He kept entering lucid dreams, he lost touch of reality at some point. They turned it into a movie actually. I took his word seriously. I seriously gotta slow down with lucid dreaming',
     lucid: true,
     date: DateTime(2022, 03, 20),
-    characters: ['maimos'],
-  ),
-  Dream(
-    title: 'Awaiting for this bloke to come',
-    description:
-        'Well, tonight i was just playing table tenis, waiting for the dragon. He never came :( im sad.',
-    lucid: true,
-    date: DateTime(2022, 03, 27),
-    characters: ['maimos'],
+    characters: ['Leonardo Di Caprio', 'Zendaya', 'Angelina Jolie'],
+    theme: ['old men lecturing me'],
+    dreamImage: const Image(
+        image: NetworkImage(
+            'https://blog.xtrawine.com/wp-content/uploads/2016/02/14.jpg')),
   ),
 ];
 
 // date we picked - global
 DateTime selectedDate = DateTime.now();
 int selectedDateIndex = 0;
+
+// variables for settings - global
+bool soulAbsorbed = false;
+int desperateCounter = -1;
 
 // ~~~~~~~~~~~~| Home Page |~~~~~~~~~~~~
 
