@@ -41,9 +41,10 @@ List<Dream> dreams = [
       characters: ['blue dragon', 'coach Victor'],
       place: ['climbing spot byt the sea'],
       theme: ['getting attacked by a dragon'],
-      dreamImage: const Image(
-          image: NetworkImage(
-              'https://media-cdn.tripadvisor.com/media/photo-s/13/8c/de/2f/sea-cliff-climbing-devon.jpg'))),
+      dreamImage: Image.asset('assets/images/_climbing.png')),
+  // dreamImage: const Image(
+  //     image: NetworkImage(
+  //         'https://media-cdn.tripadvisor.com/media/photo-s/13/8c/de/2f/sea-cliff-climbing-devon.jpg'))),
   Dream(
     title: 'Dragon attack',
     description:
@@ -100,9 +101,10 @@ List<Dream> dreams = [
       lucid: true,
       date: DateTime(2022, 03, 11),
       characters: ['dragons'],
-      dreamImage: const Image(
-          image:
-              NetworkImage('https://pbs.twimg.com/media/B97B_xsCcAANyGJ.jpg'))),
+      dreamImage: Image.asset('assets/images/_zucc.png')),
+  // dreamImage: const Image(
+  //     image:
+  //         NetworkImage('https://pbs.twimg.com/media/B97B_xsCcAANyGJ.jpg'))),
   Dream(
     title: 'Not feeling it :(',
     description:
@@ -128,17 +130,18 @@ List<Dream> dreams = [
       characters: ['old man'],
       place: ['dragon lake']),
   Dream(
-    title: 'Leonardo Di Caprio',
-    description:
-        'LEO WAS TALKING TO ME IN MY DREAM LAST NIGHT. For some reason I was attending the oscars. No dragons this time, the room was full of celebrities. Then suddenly I see Leonardo di Caprio !!!! coming to me. Then he told me what the old man has told me exactly. I was shocked. He said that he once was in a similar situation. He kept entering lucid dreams, he lost touch of reality at some point. They turned it into a movie actually. I took his word seriously. I seriously gotta slow down with lucid dreaming',
-    lucid: true,
-    date: DateTime(2022, 03, 20),
-    characters: ['Leonardo Di Caprio', 'Zendaya', 'Angelina Jolie'],
-    theme: ['old men lecturing me'],
-    dreamImage: const Image(
-        image: NetworkImage(
-            'https://blog.xtrawine.com/wp-content/uploads/2016/02/14.jpg')),
-  ),
+      title: 'Leonardo Di Caprio',
+      description:
+          'LEO WAS TALKING TO ME IN MY DREAM LAST NIGHT. For some reason I was attending the oscars. No dragons this time, the room was full of celebrities. Then suddenly I see Leonardo di Caprio !!!! coming to me. Then he told me what the old man has told me exactly. I was shocked. He said that he once was in a similar situation. He kept entering lucid dreams, he lost touch of reality at some point. They turned it into a movie actually. I took his word seriously. I seriously gotta slow down with lucid dreaming',
+      lucid: true,
+      date: DateTime(2022, 03, 20),
+      characters: ['Leonardo Di Caprio', 'Zendaya', 'Angelina Jolie'],
+      theme: ['old men lecturing me'],
+      dreamImage: Image.asset('assets/images/leo.png')),
+  //   dreamImage: const Image(
+  //       image: NetworkImage(
+  //           'https://blog.xtrawine.com/wp-content/uploads/2016/02/14.jpg')),
+  // ),
 ];
 
 // date we picked - global
